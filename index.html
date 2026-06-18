@@ -207,6 +207,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
 .food-area-chip{flex-shrink:0;font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);background:var(--warm-white);color:var(--mid);cursor:pointer;white-space:nowrap;transition:all .18s}
 .food-area-chip.active{background:var(--pink);border-color:var(--pink);color:#fff}
 .food-no-result{font-size:13px;color:var(--muted);text-align:center;padding:2rem 0}
+.food-flat-section{background:var(--warm-white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
+.food-flat-head{display:flex;align-items:center;gap:6px;padding:.7rem 1rem;border-bottom:1px solid rgba(0,0,0,0.05)}
+.food-flat-name{font-size:14px;font-weight:700;color:var(--char)}
 .food-cat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
 .food-cat-btn{background:var(--warm-white);border:2px solid var(--border);border-radius:var(--radius-lg);padding:1rem;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
 .food-cat-btn.active{background:var(--pink-light);border-color:var(--pink)}
@@ -619,9 +622,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP'
       <div class="food-area-label">📍 エリアを選ぶ</div>
       <div class="food-area-row">
         <button class="food-area-chip active" onclick="setCafeArea('all',this)">すべて</button>
+        <button class="food-area-chip" onclick="setCafeArea('明洞',this)">明洞</button>
         <button class="food-area-chip" onclick="setCafeArea('鍾路',this)">鍾路・益善洞</button>
         <button class="food-area-chip" onclick="setCafeArea('弘大',this)">弘大・延南洞</button>
         <button class="food-area-chip" onclick="setCafeArea('成水',this)">成水洞</button>
+        <button class="food-area-chip" onclick="setCafeArea('東大門',this)">東大門</button>
         <button class="food-area-chip" onclick="setCafeArea('江南',this)">江南</button>
       </div>
       <div class="list-section-title" style="margin-top:.75rem"><i class="ti ti-coffee"></i> 映えカフェ・スイーツ</div>
@@ -999,25 +1004,41 @@ shops:[
 ]}
 ];
 var CAFE=[
-{e:'☕',name:'韓屋カフェ',area:'北村韓屋村・益善洞',areas:['鍾路'],desc:'古い韓屋をリノベしたおしゃれカフェが集結。伝統と現代が融合した空間でひと息。',bg:'#FFF0E8',pop:4,spicy:0,
+{e:'☕',name:'韓屋カフェ',area:'北村韓屋村・益善洞',areas:['鍾路'],desc:'古い韓屋をリノベしたおしゃれカフェが集結。伝統と現代が融合した空間でひと息。',bg:'#FFF0E8',pop:4,crowd:4,
 shops:[
 {n:'익선동 카페 거리（益善洞カフェ通り）',area:'益善洞（鍾路）',memo:'ソウルで一番おしゃれな韓屋カフェ集積地。SNS映え◎',u:'https://naver.me/xtfm5Hvu'},
 {n:'북촌손만두（北村ソンマンドゥ）',area:'北村',memo:'景福宮近く。散歩しながら寄れる韓屋カフェ。',u:'https://naver.me/5JpQqzrF'}
 ]},
-{e:'🍵',name:'ダルゴナ・ユニークカフェ',area:'仁寺洞・弘大',areas:['鍾路','弘大'],desc:'韓国発ダルゴナコーヒーから話題のシリアルカフェまで。ユニークな体験系カフェが豊富。',bg:'#F0E8FF',pop:4,spicy:0,
+{e:'🍵',name:'ダルゴナ・ユニークカフェ',area:'仁寺洞・弘大',areas:['鍾路','弘大'],desc:'韓国発ダルゴナコーヒーから話題のシリアルカフェまで。ユニークな体験系カフェが豊富。',bg:'#F0E8FF',pop:4,crowd:3,
 shops:[
 {n:'인사동 티하우스（仁寺洞ティーハウス）',area:'安国駅 徒歩10分',memo:'ダルゴナコーヒーが飲めるほか、伝統茶も豊富。',u:'https://naver.me/FHt7c1vb'},
 {n:'카페 봄봄（カフェ ボンボン）',area:'弘大',memo:'韓国式の飾りたっぷりラテが人気。インスタ映え系。',u:'https://naver.me/GP8n9AvK'}
 ]},
-{e:'🧁',name:'韓国スイーツカフェ',area:'延南洞・成水洞',areas:['弘大','成水'],desc:'クロフル・チーズタルト・ソフトクリーム。韓国発スイーツトレンドが生まれる街。',bg:'#E8FFE8',pop:5,spicy:0,
+{e:'🧁',name:'韓国スイーツカフェ',area:'延南洞・成水洞',areas:['弘大','成水'],desc:'クロフル・チーズタルト・ソフトクリーム。韓国発スイーツトレンドが生まれる街。',bg:'#E8FFE8',pop:5,crowd:5,
 shops:[
 {n:'런던 베이글 뮤지엄（ロンドン ベーグル ミュージアム）',area:'安国・弘大',memo:'行列必至の人気ベーグル店。朝イチが狙い目。',u:'https://naver.me/xBbvgDBm'},
 {n:'어니언（ONION）',area:'成水洞・安国',memo:'倉庫をリノベしたカフェ。シンプルなパンと内装が韓国的クールさ。',u:'https://naver.me/GAy5rGsJ'}
 ]},
-{e:'🍰',name:'トレンドカフェ（成水・延南）',area:'成水洞・延南洞',areas:['成水','弘大'],desc:'ソウルの若者が集まる今一番熱いエリア。次々と新カフェがオープン。',bg:'#E8F5FF',pop:4,spicy:0,
+{e:'🍰',name:'トレンドカフェ（成水・延南）',area:'成水洞・延南洞',areas:['成水','弘大'],desc:'ソウルの若者が集まる今一番熱いエリア。次々と新カフェがオープン。',bg:'#E8F5FF',pop:4,crowd:4,
 shops:[
 {n:'대림창고（テリム倉庫）',area:'成水洞',memo:'廃工場リノベのアートカフェ。成水洞の象徴的存在。',u:'https://naver.me/xhj2IAvD'},
 {n:'연남방앗간（延南ホンアッカン）',area:'延南洞',memo:'昔ながらのお餅屋をカフェにリノベ。ヨモギラテが名物。',u:'https://naver.me/GnZhJb4k'}
+]},
+{e:'✨',name:'おしゃれカフェ（インテリア系）',area:'益善洞・成水洞・江南',areas:['鍾路','成水','江南'],desc:'韓国のカフェはインテリアのクオリティが別格。空間ごとSNSに映えるデザイナーズカフェ。',bg:'#F5E8FF',pop:5,crowd:4,
+shops:[
+{n:'LCDC SEOUL',area:'聖水洞（成水）',memo:'廃工場をリノベしたソウル最高峰のデザインカフェ。韓国雑誌・ファッション系御用達。',u:'https://naver.me/GxQpLrVn'},
+{n:'카페 수카라（Cafe Sukara）',area:'益善洞（鍾路）',memo:'路地裏にある隠れ家系おしゃれカフェ。こだわりのコーヒーと空間美が◎',u:'https://naver.me/FsRkMpQw'},
+{n:'NUDAKE（뉴데이크）江南',area:'江南駅エリア',memo:'GENTLE MONSTERが手がけるアートカフェ。アーティスティックな空間でケーキが絶品。',u:'https://naver.me/GmLtXqVs'}
+]},
+{e:'🌸',name:'明洞カフェ',area:'明洞',areas:['明洞'],desc:'',bg:'#FFE8F5',pop:3,crowd:3,
+shops:[
+{n:'투썸플레이스 명동점（TWOSOME 明洞店）',area:'明洞駅 徒歩3分',memo:'韓国発の人気カフェチェーン。ケーキとコーヒーのクオリティが高い。ショッピング休憩に◎',u:'https://naver.me/GrBvNkXm'},
+{n:'명동 카페 브레아（Cafe Brea）',area:'明洞駅 徒歩5分',memo:'明洞の隠れ家系カフェ。観光客が少なく落ち着いてひと休みできる。',u:'https://naver.me/FpQnLrYt'}
+]},
+{e:'🏮',name:'東大門エリアカフェ',area:'東大門・乙支路',areas:['東大門'],desc:'',bg:'#FFF0E0',pop:4,crowd:3,
+shops:[
+{n:'카페 을지로（Cafe 乙支路）',area:'乙支路3街駅 徒歩3分',memo:'乙支路のレトロな雰囲気が満点のカフェ。昭和感漂う空間でコーヒーを。SNS映え◎',u:'https://naver.me/FmKqRsXt'},
+{n:'을지다락（ウルジダラク）',area:'乙支路3街駅 徒歩5分',memo:'ビルの屋上にあるルーフトップカフェ。乙支路の夜景が楽しめる。夜がおすすめ。',u:'https://naver.me/GnLpQwVk'}
 ]}
 ];
 
@@ -1070,9 +1091,9 @@ shops:[
 {n:'에이랜드（A-LAND）弘大店',area:'弘大入口駅 徒歩6分',hours:'11:00〜22:00',u:'https://naver.me/GrRIHBVG',memo:'セレクトショップ。韓国・海外ブランドをまとめて見れる。'},
 {n:'프리마켓（弘大フリーマーケット）',area:'弘大公園',hours:'土曜 13:00〜18:00（3〜11月）',u:'https://naver.me/FhPqmAbL',memo:'週末限定の手作り市。韓国アーティストのアクセサリー・雑貨が安い。'}
 ]},
-{e:'💍',name:'清潭洞・ガロスギル',area:'江南',desc:'韓国のハイブランド街。韓国コスメのフラッグシップもここに集中。ゆっくり散歩しながら買い物。',bg:'#FFF0E8',
+{e:'💍',name:'清潭洞・カロスキル',area:'江南',desc:'韓国のハイブランド街。韓国コスメのフラッグシップもここに集中。ゆっくり散歩しながら買い物。',bg:'#FFF0E8',
 shops:[
-{n:'가로수길（ガロスギル）',area:'新沙駅 徒歩5分',hours:'店舗により異なる（11:00〜22:00が多い）',u:'https://naver.me/FzNkWJvK',memo:'ケヤキ並木の通りにセレクトショップが連なる。カフェ休憩も◎'},
+{n:'가로수길（カロスキル）',area:'新沙駅 徒歩5分',hours:'店舗により異なる（11:00〜22:00が多い）',u:'https://naver.me/FzNkWJvK',memo:'ケヤキ並木の通りにセレクトショップが連なる。カフェ休憩も◎'},
 {n:'MCM 清潭洞旗艦店',area:'狎鷗亭ロデオ駅 徒歩5分',hours:'11:00〜20:00',u:'https://www.mcmworldwide.com',memo:'韓国ブランドの旗艦店。免税カウンターあり。'},
 {n:'마리몬드（Marymond）',area:'新沙駅 徒歩7分',hours:'11:00〜21:00',u:'https://marymond.kr',memo:'韓国ガーリーブランド。スマホケース・バッグが人気。'}
 ]},
@@ -1147,7 +1168,7 @@ url:'https://naver.me/GtVqWjMp',urlLabel:'弘大ソックス',
 items:[
 {name:'キャラクターソックス',tag:'定番',memo:'1足300〜500円。ハングル・食べ物・アニマル柄が人気。弘大で大量買い◎'},
 {name:'韓国コスメポーチ',tag:'かわいい',memo:'明洞やオリーブヤングでゲット。機能的でデザインもかわいい。'},
-{name:'Marymond スマホケース',tag:'ブランド',memo:'韓国ガーリーブランド。ガロスギル直営店で購入。日本未入荷デザインあり。'},
+{name:'Marymond スマホケース',tag:'ブランド',memo:'韓国ガーリーブランド。カロスキル直営店で購入。日本未入荷デザインあり。'},
 {name:'韓国アイドルグッズ',tag:'ファン向け',memo:'弘大・明洞にK-POPグッズ専門店多数。限定品は早めに確認を。'}
 ]},
 {e:'☕',name:'スタバ韓国限定グッズ',area:'全国スターバックス',desc:'韓国限定のタンブラー・バッグ・ステッカーが大人気。日本では手に入らないデザインが豊富。早めに行かないと売り切れることも。',bg:'#E8F5E8',
@@ -1396,18 +1417,38 @@ function renderFoodGrid(data, containerId){
   var html='';
   data.forEach(function(item,idx){
     var id=containerId+'-i'+idx;
+    // descが空 → カードなし、直接お店一覧を表示
+    if(!item.desc && item.shops){
+      html+='<div class="food-flat-section">';
+      html+='<div class="food-flat-head"><span class="food-emoji" style="font-size:20px">'+item.e+'</span><span class="food-flat-name">'+item.name+'</span><span class="food-area" style="margin-left:4px">📍 '+item.area+'</span></div>';
+      item.shops.forEach(function(s){
+        html+='<div class="food-shop-item">'
+          +'<div class="food-shop-info"><span class="food-shop-name">'+s.n+'</span>'
+          +'<span class="food-shop-area">📍 '+s.area+'</span>'
+          +'<span class="food-shop-memo">'+s.memo+'</span></div>'
+          +(s.u?'<a class="food-shop-btn" href="'+s.u+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">地図・詳細 ↗</a>':'')
+          +'</div>';
+      });
+      html+='</div>';
+      return;
+    }
     var ratings='';
     if(item.pop!==undefined){
+      var isCafe=containerId==='cafe-grid';
+      var secondLabel=isCafe?'👥 混雑':'🌶 辛さ';
+      var secondVal=isCafe?(item.crowd||0):(item.spicy||0);
+      var secondFill=isCafe?'★':'🌶';
+      var secondEmpty='○';
       ratings='<div class="food-ratings">'
         +'<div class="food-rating-row"><span class="food-rating-label">🇯🇵 人気</span><div class="food-rating-stars">'+makeStars(item.pop,5,'fstar-fill','fstar-empty','★','★')+'</div></div>'
-        +'<div class="food-rating-row"><span class="food-rating-label">🌶 辛さ</span><div class="food-rating-stars">'+makeStars(item.spicy,5,'fchili-fill','fchili-empty','🌶','○')+'</div></div>'
+        +'<div class="food-rating-row"><span class="food-rating-label">'+secondLabel+'</span><div class="food-rating-stars">'+makeStars(secondVal,5,'fstar-fill','fstar-empty',secondFill,secondEmpty)+'</div></div>'
         +'</div>';
     }
     html+='<div class="food-card" onclick="toggleFood(\''+id+'\')" style="background:'+item.bg+'">'
       +'<div class="food-card-top"><span class="food-emoji">'+item.e+'</span>'
       +'<div class="food-card-text"><h4>'+item.name+'</h4>'
       +'<span class="food-area">📍 '+item.area+'</span>'
-      +'<p>'+item.desc+'</p>'
+      +(item.desc?'<p>'+item.desc+'</p>':'')
       +ratings
       +'</div>'
       +'<span class="food-arrow" id="arr-'+id+'"><i class="ti ti-chevron-down"></i></span>'
@@ -1564,7 +1605,7 @@ var MODELS=[
       {time:'21:00',act:'汗蒸幕でリラックス 💆‍♀️'}
     ]},
     {day:'Day 3',title:'江南 & 帰国',items:[
-      {time:'09:00',act:'江南エリアへ。ガロスギルをモーニング散歩'},
+      {time:'09:00',act:'江南エリアへ。カロスキルをモーニング散歩'},
       {time:'11:00',act:'Seye Clinicや江南のコスメ旗艦店めぐり'},
       {time:'13:00',act:'江南でタッカンマリランチ 🐔'},
       {time:'15:00',act:'空港へ移動（バス or 地下鉄）'},
@@ -1590,7 +1631,7 @@ var MODELS=[
       {time:'19:00',act:'益善洞で夕食。Korean BBQを個室で'}
     ]},
     {day:'Day 3',title:'江南・ショッピング全力',items:[
-      {time:'10:00',act:'江南エリアへ。ガロスギル→清潭洞'},
+      {time:'10:00',act:'江南エリアへ。カロスキル→清潭洞'},
       {time:'12:00',act:'江南でタッカンマリランチ 🐔'},
       {time:'14:00',act:'MUSINSAスタンダードで韓国ファッションをゲット'},
       {time:'16:00',act:'オリーブヤング江南店で最終コスメ爆買い'},
